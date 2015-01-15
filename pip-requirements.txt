@@ -1,0 +1,12 @@
+tornado
+selenium
+boto
+mongoengine
+redis
+fluent-logger
+fabric
+Pillow
+git+https://github.com/dgrtwo/ParsePy.git
+requests
+python-varnish
+pika
