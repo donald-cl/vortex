@@ -1,5 +1,6 @@
 tornado
 selenium
+bcrypt
 boto
 mongoengine
 redis
