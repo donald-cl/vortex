@@ -7,5 +7,5 @@
 from handlers import *
 
 mappings = [
-        (r"/", MainHandler),
+        (r"/", SignupHandler),
         ]
