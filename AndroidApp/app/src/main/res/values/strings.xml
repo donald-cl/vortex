@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MemoryJar</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!--Login Activity-->
+    <string name="login_title">Login Screen</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="Login">Login:</string>
+    <string name="attempts">Attempts Left:</string>
+
+    <!--Home Activity-->
+    <string name="home_title">Welcome!</string>
+
+</resources>
