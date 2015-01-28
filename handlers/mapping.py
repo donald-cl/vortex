@@ -8,4 +8,5 @@ from handlers import *
 
 mappings = [
         (r"/", SignupHandler),
+        (r"/feed", FeedHandler),
         ]

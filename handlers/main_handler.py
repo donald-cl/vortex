@@ -1,10 +1,11 @@
 from base_handlers import BaseHandler
+from model import *
 import tornado.web
 
 class SignupHandler(BaseHandler):
 
     def get(self):
-        self.write("hello world")
+        self.render('admin.html')
 
     def post(self):
         email           = self.get_argument('email')
@@ -15,16 +16,24 @@ class SignupHandler(BaseHandler):
         if password != repeat_pass:
             error = "Passwords do not match."
             raise Exception(error)
+        if not email or not password:
+            error = "You must provide a valid email and password"
+            raise Exception(error)
 
-        u = User.by_email(email)
-        if u:
-            return
-        elif login_method == 0:
-            u = User(email = email)
-            u = u.set_password_and_save(password)
-            self.set_current_user(u)
-        elif login_method == 1:
-            #TODO: facebook login (grab fb profile pics and stuff here, upoad to s3)
-            pass
+        if self.get_current_user() is None:
+            u = User.by_email(email)
+            if u and login_method == 0 and u.validate_password(password):
+                self.set_current_user(u)
+            elif login_method == 0:
+                user = User(email = email)
+                user.set_password_and_save(password)
+                user = str(user.to_dict())
+                self.set_current_user(user)
 
-        self.redirect('/index')
+        self.redirect('/feed')
+
+class FeedHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    def get(self):
+        self.render('feed.html')

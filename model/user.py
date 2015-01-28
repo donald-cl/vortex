@@ -4,7 +4,7 @@ from bson import ObjectId
 import datetime
 import bcrypt
 
-class MinPassword(Exception): pass
+class MinPassword(Exception):pass
 class MixPassword(Exception):pass
 
 class UserShortInfo(Document, MongoMixin):
@@ -35,7 +35,7 @@ class User(Document, MongoMixin):
     short_info          = ObjectIdField()
 
     email               = StringField(unique=True, required=True, max_length=50)
-    fb_uid              = IntField(unique=True, required=False)
+    fb_uid              = IntField(required=False)
     twtr_uid            = IntField(required=False)
     google_uid          = LongField(required=False)
     associated_emails   = ListField(StringField(), default=[])
@@ -46,12 +46,13 @@ class User(Document, MongoMixin):
     def full_name(self):
         return "%s %s" % (self.firstname, self.lastname)
 
-    # Hash and salt it here.
     def _secure_password(self, password):
+        password = str(password)
         hashed = bcrypt.hashpw(password, bcrypt.gensalt())
         return hashed
 
     def set_password_and_save(self, new_password):
+
         if len(new_password) < self.MIN_PASSWORD_LENGTH:
             emsg = "Your password must be at least %d characters in length" % (
                     self.MIN_PASSWORD_LENGTH)

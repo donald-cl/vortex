@@ -28,12 +28,18 @@ class BaseHandler(tornado.web.RequestHandler):
     def set_current_user(self, user):
         self.set_secure_cookie("user", user)
 
-    def get_int_argument(self, arg_name, default_val=None, strip=True):
-        arg_val = self.get_argument(arg_name, default=default_val, strip=strip)
-        return int(arg_val) if arg_val else None
+    def get_str_argument(self, arg_name, default=None, strip=True):
+        arg_val = self.get_argument(arg_name, default=default, strip=strip)
+        arg_val = default if not arg_val else None
+        return str(arg_val) if arg_val or arg_val == 0 else None
 
-    def get_bool_argument(self, arg_name, default_val=None, strip=True):
-        arg_val = self.get_argument(arg_name, default=default_val, strip=strip)
+    def get_int_argument(self, arg_name, default=None, strip=True):
+        arg_val = self.get_argument(arg_name, default=default, strip=strip)
+        arg_val = default if not arg_val else None
+        return int(arg_val) if arg_val or arg_val == 0 else None
+
+    def get_bool_argument(self, arg_name, default=None, strip=True):
+        arg_val = self.get_argument(arg_name, default=default, strip=strip)
         return bool(arg_val) if arg_val else None
 
     def api_resp(self, code, message=None, data=None):
